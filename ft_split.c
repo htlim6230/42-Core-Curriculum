@@ -52,6 +52,31 @@ static int count_words (char const *s, char c)
 	return (len);
 }
 
+#include <stdio.h>
+#include <string.h>
+
+int find_word_index(const char *str, const char *word) {
+    int index = 0;
+    while (str[index] != '\0') {
+        if (str[index] == word[0]) {
+            int i = 0;
+            int found = 1;
+            while (word[i] != '\0') {
+                if (str[index + i] != word[i]) {
+                    found = 0;
+                    break;
+                }
+                i++;
+            }
+            if (found) {
+                return index; // Zero-based start index
+            }
+        }
+        index++;
+    }
+    return -1; // Word not found
+}
+
 char	**ft_split(char const *s, char c) //char** to return collection of strings
 {
 	int i;
@@ -73,21 +98,20 @@ char	**ft_split(char const *s, char c) //char** to return collection of strings
 		while (s[i] == c)
 		{
 			i++;
-			if (s[i] != '\0' && s[i] != c)
+			if (s[i] == '\0')
+			{
+				return NULL;
+			}	
+			if (s[i] != c)
 			{
 				n_str = word_len(s, c);
-				ptr = ft_substr(&s[n], c, n_str);
+				ptr = find_word_index(s, ft_substr(s, i, n_str));
 				if (ptr == NULL)
 				{
 					return NULL;
 				}
 			}
-		if (s[i] == '\0')
-		{
-			return NULL;
-		}		
 	}
-	ptr[n_str + 1] = '\0';
 	return (*ptr);
 }
 

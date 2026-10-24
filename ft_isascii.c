@@ -6,22 +6,17 @@
 /*   By: hui-tinl <hui-tinl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/25 18:36:21 by hui-tinl          #+#    #+#             */
-/*   Updated: 2026/10/01 16:24:13 by hui-tinl         ###   ########.fr       */
+/*   Updated: 2026/10/20 14:23:44 by hui-tinl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isascii(char *str)
-{
-	int	i;
+#include "libft.h"
 
-	i = 0;
-	while (str[i] != '\0')
+int	ft_isascii(int i)
+{
+	if (!(i >= 0 && i <= 127))
 	{
-		if (!(str[i] >= 0 && str[i] <= 127))
-		{
-			return (0);
-		}
-		i++;
+		return (0);
 	}
 	return (1);
 }

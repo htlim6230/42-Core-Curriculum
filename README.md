@@ -1,2 +1,133 @@
-# 42-Core-Curriculum
-Record of works for my Core days
+*This project has been created as part of the 42 curriculum by hui-tinl*
+
+# Libft — Your First C Library
+
+## Description
+
+**Libft** is the inaugural project of the 42 curriculum. Its primary goal is to recode a set of essential C standard library (`libc`) functions, alongside supplementary utilities for string manipulation, dynamic memory allocation, and linked list management.
+
+Because standard library functions are prohibited in subsequent 42 curriculum projects, this repository compiles into a static library archive (`libft.a`) that acts as a foundational toolkit for future assignments like `get_next_line`, `ft_printf`, and `push_swap`.
+
+The project enforces strict adherence to 42's **Norminette** coding standards (max 25 lines per function, max 4 parameters, restricted variable declarations) and requires rigorous memory management without segmentation faults, memory leaks, or undefined behavior across integer limits and allocation failures.
+
+---
+
+## Technical Architecture & Function Categories
+
+The library is divided into three functional domains:
+
+### 1. Standard Libc Functions
+
+Re-implementations of standard POSIX/C library routines:
+
+* **Character Checks & Conversions:** `ft_isalpha`, `ft_isdigit`, `ft_isalnum`, `ft_isascii`, `ft_isprint`, `ft_toupper`, `ft_tolower`.
+* **String Operations:** `ft_strlen`, `ft_strlcpy`, `ft_strlcat`, `ft_strchr`, `ft_strrchr`, `ft_strnstr`, `ft_atoi`.
+* **Direct Memory Operations:** `ft_memset`, `ft_bzero`, `ft_memcpy`, `ft_memmove`, `ft_memchr`, `ft_memcmp`.
+* **Dynamic Allocation Wrappers:** `ft_calloc`, `ft_strdup`.
+
+### 2. Supplementary Utility Functions
+
+Functions not present in the standard C library or implemented with customized signatures:
+
+* **Substrings & Concatenation:** `ft_substr`, `ft_strjoin`, `ft_strtrim`, `ft_split`.
+* **Numeric Conversions:** `ft_itoa` (converts integer to a freshly heap-allocated ASCII string, accounting for sign and `INT_MIN`).
+* **Function Application:**
+* `ft_strmapi`: Applies a function `f(i, c)` to each character of a string, returning a newly allocated string.
+* `ft_striteri`: Iterates over each character of a string, passing its address to `f(i, &c)` to apply in-place side effects.
+
+
+* **File Descriptor Outputs:** `ft_putchar_fd`, `ft_putstr_fd`, `ft_putendl_fd`, `ft_putnbr_fd`.
+
+A singly-linked list implementation structured around the `t_list` type:
+
+* **Node Construction & Sizing:** `ft_lstnew`, `ft_lstsize`, `ft_lstlast`.
+* **List Mutations:** `ft_lstadd_front`, `ft_lstadd_back`, `ft_lstdelone`, `ft_lstclear`.
+* **Iteration & Mapping:** `ft_lstiter`, `ft_lstmap` (maps linked lists while guaranteeing that partial memory failures during iteration clean up both previous nodes and orphaned transformed payloads).
+
+---
+
+## Instructions
+
+### Compilation Rules
+
+The project includes a GNU `Makefile` that compiles all sources using `gcc` (or `clang`) with the mandatory `-Wall -Wextra -Werror` flags.
+
+| Command | Action |
+| --- | --- |
+| `make` / `make all` | Compiles `.c` sources into `.o` objects and creates the `libft.a` static library. |
+| `make clean` | Removes compiled object files (`.o`). |
+| `make fclean` | Removes compiled object files (`.o`) and the `libft.a` library. |
+| `make re` | Performs `fclean` followed by `all` to execute a fresh build. |
+
+### Linking to an External Project
+
+To use `libft.a` in your C programs:
+
+1. Clone and compile the library:
+```bash
+git clone <your-repo-url> libft
+cd libft
+make bonus
+
+```
+
+
+2. Include the header `libft.h` inside your C file:
+```c
+#include "libft.h"
+
+```
+
+
+3. Compile your target program by pointing to the library archive:
+```bash
+gcc -Wall -Wextra -Werror main.c -L. -lft -I./includes -o my_program
+
+```
+
+
+
+---
+
+## Engineering Highlights & Debugging Lessons
+
+During the engineering of this library, several critical low-level memory and algorithmic patterns were resolved:
+
+1. **Spatial vs. Temporal Buffer Populating (`ft_itoa`):**
+* Unlike standard terminal output (`write(1, ...)`) which moves the system cursor forward automatically, memory buffers allocated by `malloc` have no native cursor.
+* `ft_itoa` resolves digit distribution using backwards modulo index addressing (`len - 1` down to `0`), preventing recursion stack overwrites and truncation issues on boundary conditions like `-2147483648` (`INT_MIN`).
+
+
+2. **In-Place Mutation via Address Dereferencing (`ft_striteri`):**
+* Unlike mapping functions that allocate fresh return memory, `ft_striteri` accepts a function pointer of type `void (*f)(unsigned int, char *)`. Characters are mutated directly by passing their dynamic memory offsets `&s[i]` (or `s + i`), eliminating extra intermediate buffers.
+
+
+3. **Orphan Payload Reclamation under Allocation Failures (`ft_lstmap`):**
+* When iterating through a list, if `ft_lstnew` fails midway through the chain, calling `ft_lstclear(&new_list, del)` alone leaves the payload generated by `f(lst->content)` unreferenced on the heap.
+* `ft_lstmap` explicitly binds the return value of `f` to an intermediate pointer, ensuring `del(content)` executes on the unattached payload before clearing the partial list on allocation exceptions.
+
+
+4. **Makefile Dependency Parsing:**
+* Strict GNU Make formatting requires separating function arguments with spaces rather than colons (`$(addsuffix .c, $(LIST))`), properly distinguishing between letter `.o` and digit `.0` extensions in substitution rules, and enforcing hard tab characters for recipe execution.
+
+
+
+---
+
+## Resources
+
+### References & Documentation
+
+* [The Open Group Base Specifications Issue 7 / POSIX.1-2008](https://pubs.opengroup.org/onlinepubs/9699919799/) — Reference specifications for standard C library functions (`memset`, `memmove`, `strlcpy`).
+* [GNU Make Manual](https://www.gnu.org/software/make/manual/make.html) — Reference guide for pattern rules, variable assignments, and automatic variables (`$<`, `$@`).
+* [Valgrind User Manual](https://valgrind.org/docs/manual/manual.html) — Profiling tool for tracking heap allocations, invalid reads, and definite memory loss.
+* *The C Programming Language* (Kernighan & Ritchie) — Canonical resource on pointer arithmetic, dynamic memory boundaries, and type conversions.
+
+### AI Collaboration Disclosure
+
+Generative AI was used as an interactive debugging assistant and code reviewer during the development of this project:
+
+* **Algorithm Analysis & Memory Tracing:** Assisted in diagnosing stack call discrepancies in `ft_putnbr` and determining why recursive screen-writing functions cannot directly populate heap allocations without cursor state.
+* **Type Incompatibilities:** Clarified pointer vs. value conversions, dereferencing requirements (`int *` vs `int`), and the difference between `void` return procedures and `void *` pointer expressions in `ft_striteri`.
+* **Leak Detection Architecture:** Advised on edge-case failure flows in `ft_lstmap` to identify dangling dynamically allocated nodes when memory mock-failures trigger inside `ft_lstnew`.
+* **Makefile Syntax Auditing:** Identified syntax errors in GNU Make variable expansion (`addsuffix` syntax and `.c=.0` typos).

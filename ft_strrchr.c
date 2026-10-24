@@ -6,36 +6,30 @@
 /*   By: hui-tinl <hui-tinl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/04 12:11:14 by hui-tinl          #+#    #+#             */
-/*   Updated: 2026/10/04 13:08:17 by hui-tinl         ###   ########.fr       */
+/*   Updated: 2026/10/24 17:30:53 by hui-tinl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_strlen (const char *str)
-{
-	int	i;
+#include "libft.h"
 
-	i = 0;
-	while (str[i] != '\0')
-	{
-		i++;
-	}
-	return (i);
-	if (str[i] == '\0')
-	{
-		return (0);
-	}
-}
-
-char *ft_strrchr(const char *str, int c)
+char	*ft_strrchr(const char *str, int c)
 {
-	int i;
-	char ch = (char)c;
-	
+	int		i;
+	char	ch;
+
+	ch = (char) c;
+	if (str == NULL)
+	{
+		return (NULL);
+	}
 	i = ft_strlen(str);
-	
-	while (str[i] >= 0)
+	if (c == '\0')
 	{
-		if(str[i] == ch)
+		return ((char *)&str[i]);
+	}
+	while (i >= 0)
+	{
+		if (str[i] == ch)
 		{
 			return ((char *)&str[i]);
 		}
@@ -43,4 +37,3 @@ char *ft_strrchr(const char *str, int c)
 	}
 	return (NULL);
 }
-

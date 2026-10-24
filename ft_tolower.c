@@ -6,16 +6,17 @@
 /*   By: hui-tinl <hui-tinl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/03 16:54:37 by hui-tinl          #+#    #+#             */
-/*   Updated: 2026/10/04 12:53:31 by hui-tinl         ###   ########.fr       */
+/*   Updated: 2026/10/24 17:31:10 by hui-tinl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	*ft_tolower(int c)
+#include "libft.h"
+
+int	ft_tolower(int c)
 {
-	if(c >= 'a' && c <= 'z')
-		{
-			c = c + 'a' - 'A';
-		}
+	if (c >= 'A' && c <= 'Z')
+	{
+		c = c + 'a' - 'A';
+	}
 	return (c);
 }
-

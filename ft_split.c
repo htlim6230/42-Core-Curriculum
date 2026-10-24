@@ -6,17 +6,15 @@
 /*   By: hui-tinl <hui-tinl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/10 18:37:35 by hui-tinl          #+#    #+#             */
-/*   Updated: 2026/10/18 20:46:46 by hui-tinl         ###   ########.fr       */
+/*   Updated: 2026/10/21 17:46:01 by hui-tinl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdlib.h>
-#include <stdio.h>
 
-static int	word_len (char const *s, char c)
+static int	word_len(char const *s, char c)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (s[i] != '\0' && s[i] != c)
@@ -26,105 +24,80 @@ static int	word_len (char const *s, char c)
 	return (i);
 }
 
-static int count_words (char const *s, char c)
+static int	count_words(char const *s, char c)
 {
-	int n;
-	int len;
+	int	i;
+	int	count;
+	int	in_word;
 
-	n = 0;
-	len = 0;
-	while (s[n] != '\0')
-	{
-		while (s[n] == c)
-		{
-			n++;
-		}
-		if (s[n] != '\0' && s[n] != c)
-		{
-			len++;
-		}
-		n = n + word_len(&s[n], c);
-		if (s[n] == '\0')
-		{
-			break;
-		}
-	}
-	return (len);
-}
-
-#include <stdio.h>
-#include <string.h>
-
-int find_word_index(const char *str, const char *word) {
-    int index = 0;
-    while (str[index] != '\0') {
-        if (str[index] == word[0]) {
-            int i = 0;
-            int found = 1;
-            while (word[i] != '\0') {
-                if (str[index + i] != word[i]) {
-                    found = 0;
-                    break;
-                }
-                i++;
-            }
-            if (found) {
-                return index; // Zero-based start index
-            }
-        }
-        index++;
-    }
-    return -1; // Word not found
-}
-
-char	**ft_split(char const *s, char c) //char** to return collection of strings
-{
-	int i;
-	int n_words;
-	int n_str;
-	char *ptr
-	
 	i = 0;
-	if (s == NULL)
-		return NULL;
-	n_words = count_words(s, c);
-	ptr = (char *)malloc((n_words+1) * sizeof(char));
-	if (ptr == NULL)
+	count = 0;
+	in_word = 0;
+	while (s[i] != '\0')
 	{
-		return NULL;
-	}
-	while(s[i] != '\0')
-	{
-		while (s[i] == c)
+		if (s[i] != c && in_word == 0)
 		{
-			i++;
-			if (s[i] == '\0')
-			{
-				return NULL;
-			}	
-			if (s[i] != c)
-			{
-				n_str = word_len(s, c);
-				ptr = find_word_index(s, ft_substr(s, i, n_str));
-				if (ptr == NULL)
-				{
-					return NULL;
-				}
-			}
+			in_word = 1;
+			count++;
+		}
+		else if (s[i] == c)
+		{
+			in_word = 0;
+		}
+		i++;
 	}
-	return (*ptr);
+	return (count);
 }
 
-
-
-
-
-char *result()
-
-int main(void)
+static void	*free_all(char **ptr, int j)
 {
-  char *s = "   hello world   42";
-  char c = ' ';
-  printf("Check: %s\n", ft_split(s, c));
-  return(0);
+	while (j > 0)
+	{
+		j--;
+		free(ptr[j]);
+	}
+	free(ptr);
+	return (NULL);
+}
+
+static int	fill_words(char **ptr, char const *s, char c)
+{
+	int	i;
+	int	j;
+	int	len;
+
+	i = 0;
+	j = 0;
+	while (s[i] != '\0')
+	{
+		while (s[i] != '\0' && s[i] == c)
+			i++;
+		if (s[i] != '\0')
+		{
+			len = word_len(&s[i], c);
+			ptr[j] = ft_substr(s, i, len);
+			if (ptr[j] == NULL)
+				return (free_all(ptr, j), 0);
+			i += len;
+			j++;
+		}
+	}
+	ptr[j] = NULL;
+	return (1);
+}
+
+char	**ft_split(char const *s, char c)
+{
+	char	**ptr;
+	int		n_words;
+
+	if (s == NULL)
+		return (NULL);
+	n_words = count_words(s, c);
+	ptr = malloc(sizeof(char *) * (n_words + 1));
+	if (ptr == NULL)
+		return (NULL);
+	if (!fill_words(ptr, s, c))
+		return (NULL);
+	return (ptr);
 }

@@ -6,39 +6,28 @@
 /*   By: hui-tinl <hui-tinl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/28 12:51:07 by hui-tinl          #+#    #+#             */
-/*   Updated: 2026/10/01 13:25:39 by hui-tinl         ###   ########.fr       */
+/*   Updated: 2026/10/24 12:30:22 by hui-tinl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include <stdio.h>
+#include "libft.h"
 
-int	ft_strncmp(char *s1, char *s2, int n)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	int	i;
+	size_t			i;
+	unsigned char	*str_1;
+	unsigned char	*str_2;
 
 	i = 0;
-	while (i < n)
+	str_1 = (unsigned char *)s1;
+	str_2 = (unsigned char *)s2;
+	while (n > i && (str_1[i] != '\0' || str_2[i] != '\0'))
 	{
-		if (s1[i] != s2[i])
+		if (str_1[i] != str_2[i])
 		{
-			if (s1[i] > s2[i])
-			{
-				return (1);
-			}
-			return (-1);
+			return (str_1[i] - str_2[i]);
 		}
-		else if (s1[i] == '\0' && s2[i] == '\0')
-		{
-			return (0);
-		}
-		i ++;
+		i++;
 	}
 	return (0);
 }
-
-//int main (void)
-//{
-	//char s1[] = "G";
-	//char s2[] = "Gzzks2";
-	//printf("Results: %d\n", ft_strncmp(s1, s2, 3));
-//}

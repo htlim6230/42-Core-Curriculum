@@ -6,35 +6,32 @@
 /*   By: hui-tinl <hui-tinl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/03 18:11:20 by hui-tinl          #+#    #+#             */
-/*   Updated: 2026/10/04 12:42:53 by hui-tinl         ###   ########.fr       */
+/*   Updated: 2026/10/21 19:42:50 by hui-tinl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include "libft.h"
 
-char *ft_strchr(const char *str, int c)
+char	*ft_strchr(const char *str, int c)
 {
-	int i;
-	char ch = (char)c;
-	
+	int		i;
+
 	i = 0;
-	
+	if (str == NULL)
+	{
+		return (NULL);
+	}
 	while (str[i] != '\0')
 	{
-		if(str[i] == ch)
+		if (str[i] == (char)c)
 		{
 			return ((char *)&str[i]);
 		}
 		i++;
 	}
+	if ((char)c == '\0')
+	{
+		return ((char *)&str[i]);
+	}
 	return (NULL);
-}
-
-int main(void)
-{
-	char str[10] = "QEYUR";
-	int c = 'Y';
-	printf("Results: %s\n", ft_strchr(str, c));
-	return (0);
-
 }

@@ -6,16 +6,17 @@
 /*   By: hui-tinl <hui-tinl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/03 14:25:16 by hui-tinl          #+#    #+#             */
-/*   Updated: 2026/10/04 12:53:37 by hui-tinl         ###   ########.fr       */
+/*   Updated: 2026/10/24 17:47:19 by hui-tinl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 
-int	*ft_toupper(int c)
+int	ft_toupper(int c)
 {
-	if(c >= 'a' && c <= 'z')
-		{
-			c = c - 'a' + 'A';
-		}
+	if (c >= 'a' && c <= 'z')
+	{
+		c = c - 'a' + 'A';
+	}
 	return (c);
 }

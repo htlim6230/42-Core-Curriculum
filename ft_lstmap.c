@@ -1,40 +1,38 @@
-#include "libft.h"
-#include <stdlib.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_lstmap.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hui-tinl <hui-tinl@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/10/18 13:00:02 by hui-tinl          #+#    #+#             */
+/*   Updated: 2026/10/18 13:00:02 by hui-tinl         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-t_list *ft_lstmap(t_list *lst, void *(*f)(void *),void (*del)(void *))
+#include "libft.h"
+
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	t_list *new_list;
-	t_list *new_node;
-	void *content;
+	t_list	*new_list;
+	t_list	*new_node;
+	void	*new_content;
+
 	new_list = NULL;
-	if (lst == NULL || f == NULL || del == NULL)
-	{
-		return NULL;
-	}
+	if (lst == NULL || f == NULL)
+		return (NULL);
 	while (lst != NULL)
 	{
-		content = f(lst->content);
-		if (content == NULL)
-		{
-			del(content);
-		}
-		new_node = ft_lstnew(content);
+		new_content = f(lst->content);
+		new_node = ft_lstnew(new_content);
 		if (new_node == NULL)
 		{
-			ft_lstclear(new_node, del);
+			del(new_content);
+			ft_lstclear(&new_list, del);
+			return (NULL);
 		}
-		ft_lstadd_back(*new_list, new_node);
-		new_node = lst->next;
+		ft_lstadd_back(&new_list, new_node);
+		lst = lst->next;
 	}
-	return(new_list);
-}
-
-void f(void *current)
-{
-    printf("%s\n", (char *)content);
-}
-
-void del(void *current)
-{
-	free(current);
+	return (new_list);
 }

@@ -6,22 +6,17 @@
 /*   By: hui-tinl <hui-tinl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/25 18:37:02 by hui-tinl          #+#    #+#             */
-/*   Updated: 2026/10/01 13:24:39 by hui-tinl         ###   ########.fr       */
+/*   Updated: 2026/10/24 17:06:39 by hui-tinl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isprint(char *str)
-{
-	int	i;
+#include "libft.h"
 
-	i = 0;
-	while (str[i] != '\0')
+int	ft_isprint(int i)
+{
+	if (!(i >= 32 && i <= 126))
 	{
-		if (!(str[i] >= 0 && str[i] <= 255))
-		{
-			return (0);
-		}
-		i++;
+		return (0);
 	}
 	return (1);
 }

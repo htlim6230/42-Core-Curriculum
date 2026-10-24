@@ -6,23 +6,18 @@
 /*   By: hui-tinl <hui-tinl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/25 18:11:14 by hui-tinl          #+#    #+#             */
-/*   Updated: 2026/10/01 13:23:47 by hui-tinl         ###   ########.fr       */
+/*   Updated: 2026/10/20 14:28:28 by hui-tinl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isalnum(char *str)
-{
-	int	i;
+#include "libft.h"
 
-	i = 0;
-	while (str[i] != '\0')
+int	ft_isalnum(int i)
+{
+	if (!((i >= 48 && i <= 57) || (i >= 65 && i <= 90)
+			|| (i >= 97 && i <= 122)))
 	{
-		if (!((str[i] >= 48 && str[i] <= 57) || (str[i] >= 65 && str[i] <= 90)
-				|| (str[i] >= 97 && str[i] <= 122)))
-		{
-			return (0);
-		}
-		i++;
+		return (0);
 	}
 	return (1);
 }

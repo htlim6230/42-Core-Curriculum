@@ -6,40 +6,34 @@
 /*   By: hui-tinl <hui-tinl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/07 19:12:51 by hui-tinl          #+#    #+#             */
-/*   Updated: 2026/10/08 20:53:40 by hui-tinl         ###   ########.fr       */
+/*   Updated: 2026/10/21 21:02:20 by hui-tinl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
-#include <stdlib.h>
+#include "libft.h"
 
-static char *ft_strcpy(char *dest, const char *src)
+static char	*ft_strcpy(char *dest, const char *src)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(src[i] != '\0')
+	while (src[i] != '\0')
 	{
 		dest[i] = src[i];
 		i++;
 	}
-	while(src[i] == '\0')
-	{
-		dest[i] = '\0';
-		i++;
-	}
-	return dest;
+	dest[i] = '\0';
+	return (dest);
 }
 
 char	*ft_strdup(const char *s)
 {
-	char *ptr;
-	size_t n;
+	char	*ptr;
+	size_t	n;
 
 	n = ft_strlen(s);
-		
-	ptr = (char *)malloc((n+1)*sizeof(s));
-	if (ptr == 'NULL')
+	ptr = (char *)malloc((n + 1) * sizeof(char));
+	if (ptr == NULL)
 	{
 		return (NULL);
 	}

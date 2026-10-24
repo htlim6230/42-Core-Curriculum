@@ -6,22 +6,17 @@
 /*   By: hui-tinl <hui-tinl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/25 17:53:47 by hui-tinl          #+#    #+#             */
-/*   Updated: 2026/10/01 13:24:36 by hui-tinl         ###   ########.fr       */
+/*   Updated: 2026/10/24 12:22:27 by hui-tinl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int ft_isdigit(char *str)
-{
-	int	i;
+#include "libft.h"
 
-	i = 0;
-	while (str[i] != '\0')
+int	ft_isdigit(int i)
+{
+	if (!(i >= 48 && i <= 57))
 	{
-		if (!(str[i] >= 48 && str[i] <= 57))
-		{
-			return 0;
-		}
-		i++;
+		return (0);
 	}
-	return 1;
+	return (1);
 }

@@ -6,13 +6,13 @@
 /*   By: hui-tinl <hui-tinl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/15 17:55:16 by hui-tinl          #+#    #+#             */
-/*   Updated: 2026/10/16 18:34:17 by hui-tinl         ###   ########.fr       */
+/*   Updated: 2026/10/21 19:43:19 by hui-tinl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list *ft_lstlast(t_list *lst)
+t_list	*ft_lstlast(t_list *lst)
 {
 	if (lst == NULL)
 	{

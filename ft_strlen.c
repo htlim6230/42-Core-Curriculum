@@ -6,13 +6,15 @@
 /*   By: hui-tinl <hui-tinl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/26 13:32:58 by hui-tinl          #+#    #+#             */
-/*   Updated: 2026/10/01 13:25:49 by hui-tinl         ###   ########.fr       */
+/*   Updated: 2026/10/20 18:00:26 by hui-tinl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_strlen (char *str)
+#include "libft.h"
+
+size_t	ft_strlen(const char *str)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	while (str[i] != '\0')

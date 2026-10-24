@@ -6,15 +6,27 @@
 /*   By: hui-tinl <hui-tinl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/08 19:22:05 by hui-tinl          #+#    #+#             */
-/*   Updated: 2026/10/08 20:52:47 by hui-tinl         ###   ########.fr       */
+/*   Updated: 2026/10/21 21:05:10 by hui-tinl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
-#include <stdlib.h>
-#include <stdio.h>
+#include "libft.h"
 
-static char	*ft_strcat(char const *dest, char const *src)
+static char	*ft_strcpy(char *dest, char const *src)
+{
+	int	i;
+
+	i = 0;
+	while (src[i] != '\0')
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
+}
+
+static char	*ft_strcat(char *dest, char const *src)
 {
 	int	i;
 	int	n;
@@ -37,11 +49,12 @@ static char	*ft_strcat(char const *dest, char const *src)
 	return (dest);
 }
 
-char *ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char *new_str;
-	size_t s1_len;
-	size_t s2_len;
+	char	*new_str;
+	size_t	s1_len;
+	size_t	s2_len;
+	size_t	total_len;
 
 	s1_len = ft_strlen(s1);
 	s2_len = ft_strlen(s2);
@@ -49,13 +62,14 @@ char *ft_strjoin(char const *s1, char const *s2)
 	{
 		return (NULL);
 	}
-	new_str = (char*)malloc(sizeof(char) * (s1_len + s2_len + 1));
-	if(new_str == NULL)
+	total_len = s1_len + s2_len + 1;
+	new_str = (char *)malloc(sizeof (char) * total_len);
+	if (new_str == NULL)
 	{
 		return (NULL);
 	}
-	ft_strcpy(new_str, s1)
+	ft_strcpy(new_str, s1);
 	ft_strcat(new_str, s2);
-	ptr[total_len] = '\0';
-	return (ptr);
+	new_str[s1_len + s2_len] = '\0';
+	return (new_str);
 }

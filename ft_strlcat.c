@@ -6,37 +6,33 @@
 /*   By: hui-tinl <hui-tinl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/29 19:50:19 by hui-tinl          #+#    #+#             */
-/*   Updated: 2026/10/02 14:41:35 by hui-tinl         ###   ########.fr       */
+/*   Updated: 2026/10/24 14:58:03 by hui-tinl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-size_t	ft_strlcat (char *dest, const char *src, size_t size)
+#include "libft.h"
+
+size_t	ft_strlcat(char *dest, const char *src, size_t size)
 {
 	size_t	i;
 	size_t	len;
 
 	i = 0;
-	len = 0;
-	while (dest[len] != '\0')
+	len = ft_strlen(dest);
+	if (size == 0)
+		return (ft_strlen(src));
+	if ((size - 1) > len && size > 0)
 	{
-		len++;
-	}
-	while (i < size && src[i] != '\0')
-	{
-		dest[len + i] = src[i];
-		i ++;
-	}
-	if (i == size)
-	{
+		while ((size -1) > (len + i) && src[i] != '\0')
+		{
+			dest[len + i] = src[i];
+			i ++;
+		}
 		dest[len + i] = '\0';
 	}
-	return (len + i);
-}
-
-int main (void)
-{
-	char dest[20] = "test";
-	char *src = "Trial test";
-	printf("Copy results: %zu\n", ft_strlcat(dest, src, 5));
+	if (len >= size)
+	{
+		len = size;
+	}
+	return (len + ft_strlen(src));
 }
